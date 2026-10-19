@@ -10,8 +10,25 @@ const practiceRoutes = require('./routes/practice');
 
 const app = express();
 
+const corsOrigins = new Set([
+  'http://localhost:3000',
+  'https://interview-pre-kit-frontend-j2kxmz12p-kartikay-ks-projects.vercel.app',
+]);
+if (process.env.FRONTEND_URL) {
+  for (const url of process.env.FRONTEND_URL.split(',')) {
+    const trimmed = url.trim();
+    if (trimmed) corsOrigins.add(trimmed);
+  }
+}
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin(origin, callback) {
+    if (!origin || corsOrigins.has(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
 }));
 
