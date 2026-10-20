@@ -12,6 +12,7 @@ const app = express();
 
 const corsOrigins = new Set([
   'http://localhost:3000',
+  'https://interview-pre-kit-frontend.vercel.app',
   'https://interview-pre-kit-frontend-j2kxmz12p-kartikay-ks-projects.vercel.app',
 ]);
 if (process.env.FRONTEND_URL) {
